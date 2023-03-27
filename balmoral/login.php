@@ -170,9 +170,9 @@ elseif($_POST['fOriginator'] == "login16504")
                 
         	    $echoID                = 43478 ;
         
-                $echoString         = $echoString."<P>$echoID manageLoginAttempts is $manageLoginAttempts ";
-                $echoString         = $echoString."<P>$echoID lErrCode is $lErrCode ";
-                $echoString         = $echoString."<P>$echoID lNarrative is $lNarrative ";
+                //$echoString         = $echoString."<P>$echoID manageLoginAttempts is $manageLoginAttempts ";
+                //$echoString         = $echoString."<P>$echoID lErrCode is $lErrCode ";
+                //$echoString         = $echoString."<P>$echoID lNarrative is $lNarrative ";
             }        
         
 	    
