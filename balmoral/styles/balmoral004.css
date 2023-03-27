@@ -1,0 +1,311 @@
+/* balmoral002.css  */
+/* 20221217 1951    */ 
+/* KMB              */
+
+/***********************************************************************************************************
+/* GLOBAL SETTINGS */
+ 
+/* all HTML elements have a box-sizing property set to border-box                          */
+/* that way, padding and border are included in the total width and height of the elements */
+
+
+/*
+* 
+    {
+         box-sizing:      border-box;
+    }
+*/   
+
+:root 
+    {
+        /* colours - devlog 20220212 0833 - darker to lighter */
+        /* http://veli.ee/colorpedia/?c=020873                */
+        
+        --black:                #000000;
+        --blackOpaque40:        rgba(0,0,0,0.4);          /* must be an rgba value in order to get the opacity percentage */
+                
+        --blueNavy:             #020873;
+        --blueDark:             #0000C0; /* regular HTML colour for links */
+        --blueChathams:         #0E4C73;
+        --blueAzure:            #225282;
+        --blueJelly:            #2B6AA8;
+        --blueBoston:           #3981BF;
+        --blueCornflower:       #99C5EF;
+        --blueMalibu:           #4CC9FF;
+        --blueOnahau:           #C4FFFD;
+        --blueTranquil:         #E7FFFE;        
+        --blueSolitude:         #EDF8FF;
+        
+
+        
+        --greenVerdunA:         #5A7302;
+        --greenVerdunB:         #477202;
+        --greenChristi:         #55C10D;
+        --greenLimeade:         #5F9903;
+        --greenBright:          #67E911;
+        --greenChartreuse:      #8FE504;
+        --greenElectricLime:    #B4E504;
+        --greenSnowFlurry:      #DCFDC3;
+        --greenRiceFlower:      #F3FFEA;
+        
+        --greyDove:             #676767;
+        --greyBoulder:          #7D7D7D;
+        --greyChalice:          #A1A1A1;
+        --greyNobel:            #B7B7B7;
+        --greySilver:           #c5c5c5;
+        --greyPumice:           #C5C9C5;
+        --greyMercury:          #E7E7E7;
+        --greyConcrete:         #F2F2F2;
+        --white:                #FFFFFF;
+        
+        /* fonts - define regular Serif and regular Sans - others are multiples of that */
+        
+        --fontSerifSizeRegular: 1.2em;         
+        
+        --fontSerifSizeBig:     calc(var(--fontSerifSizeRegular) * 1.5);
+        --fontSerifSizeSmall:   calc(var(--fontSerifSizeRegular) * 0.8);
+        
+        --fontSansSizeRegular:  1.0em;       
+        
+        --fontSansSizeBig:      calc(var(--fontSansSizeRegular) * 1.5);
+        --fontSansSizeSmall:    calc(var(--fontSansSizeRegular) * 0.8);
+        
+        /* wrappers - var - esp heights as a function of font sizes  */
+        
+        --bannerFontFamily:     Arial, sans-serif;
+        --contentFontFamily;    "Times New Roman", Times, serif;
+        
+        
+        
+        --bannerScalingFactor:  3;        
+        
+        --bannerGradient:       linear-gradient(var(--blueOnahau),    var(--blueSolitude));  
+        --bannerHeight:         calc(var(--fontSansSizeRegular) * var(--bannerScalingFactor));
+        
+        /* @media factors for screen sizes standard, small, very small */
+        
+        --fontFactorMax:        1;
+        --fontFactorMid:        0.666;
+        --fontFactorMin:        0.5;
+        
+        /* size related padding */
+        
+        --fontPaddingTopBot:        calc(var(--fontSerifSizeRegular) * 0.166);
+        --fontPaddingLeftRight:     calc(var(--fontSerifSizeRegular) * 0.666);
+        --fontPaddingNavbar:        calc(var(--fontSerifSizeRegular) * 0.333);
+        
+        /* dev tools */
+        
+        --devWorkBorder:             0px;            /* set to 4 to see all borders, 0 to see none */
+        
+        --borderRadiusBig:           20px;
+        --borderRadiusMedium:        10px;
+        --borderRadiusSmall:         5px;
+        --borderRadiusMini:          3px;
+        --borderRadiusButtonBig:     4px;
+        --borderRadiusButtonSmall:   2px;
+        --borderRadiusNone:          0px;
+
+        --borderLineBig:             5px;
+        --borderLineMedium:          3px;
+        --borderLineSmall:           2px;
+        --borderLineMini:            1px;
+        --borderLineNone:            0px;        
+        
+        --paleBackground:            var(--blueSolitude);
+        --greyedOut:                 var(--greyMercury);
+        
+    }
+
+/*************************************************************************************************************/
+/* HTML BODY Header Footer */
+/* 20211226 1617           */
+
+html, body 
+    {
+        height:           100%;
+        margin:           0;
+    }
+
+/*************************************************************************************************************/
+/* wrappers */
+
+.wrapperGradient100 
+    {
+        width:            100%;
+    
+        background:       var(--bannerGradient);
+        padding:          0;
+        margin:           0;
+        
+        border:           var(--devWorkBorder) solid yellow;
+    } 
+    
+.wrapperSimple100 
+    {
+        width:            100%;
+        padding:          0;
+        margin:           0;
+        
+        border:           var(--devWorkBorder) solid red;
+    }     
+    
+/*************************************************************************************************************/
+/* navbarButton */
+    
+.navbarButton 
+    {
+        background:       var(--blueAzure);
+        text-shadow:      1px 1px 1px #2B66A9; 
+        color:            #DBDBDB;
+        display:          inline;
+        border-radius:    4px;
+        box-shadow:       inset 0 1px 0 #333333;
+        font-family:      Arial, sans-serif;
+        line-height:      1.75em;
+        padding:          0.1em 0.8em; 
+        text-decoration:  none; 
+    }
+
+.navbarButton:hover 
+    { 
+        box-shadow:       inset 0 1px 1px var(--white), inset 0 1.5em 1em #C5C9C5;
+    }
+
+.navbarButton:active 
+    { 
+        box-shadow:       inset 0 1px 1px var(--black), inset 0 1.5em 1em var(--blueBoston); 
+    }    
+    
+/*************************************************************************************************************/
+/* standardWidthFormButton */
+
+/* has smaller border-radius and no line-height */
+             
+.standardWidthFormButton 
+    {
+        background:       var(--blueAzure);
+        width:            12em;
+        text-shadow:      1px 1px 1px #2B66A9; 
+        color:            #DBDBDB;
+        display:          inline;
+        border-radius:    2px;
+        box-shadow:       inset 0 1px 0 #333333;
+        font-family:      Arial, sans-serif;
+        padding:          0.1em 0.8em; 
+        text-decoration:  none; 
+    }
+
+.standardWidthFormButton:hover 
+    { 
+        box-shadow:       inset 0 1px 1px var(--white), inset 0 1.5em 1em #C5C9C5;
+    }
+
+.standardWidthFormButton:active 
+    { 
+        box-shadow:       inset 0 1px 1px var(--black), inset 0 1.5em 1em var(--blueBoston); 
+    }
+    
+/*************************************************************************************************************/
+/* internalLinkButton */
+
+/* this class is intended for use only with triangles:   */
+/* $htmlTriangleUp    = "&#9651;";                       */
+/* $htmlTriangleRight = "&#9655;";                       */
+
+/* variable width */
+/* has smaller border-radius, no padding and no line-height */
+             
+.internalLinkButton 
+    {
+        background:       var(--greyChalice);
+        text-shadow:      1px 1px 1px var(--greyNobel); 
+        color:            var(--black);
+        display:          inline;
+        border-radius:    2px;
+        box-shadow:       inset 0 1px 0 var(--greyDove);
+	    font-size:        10px;
+        font-family:      Arial, sans-serif;
+        text-decoration:  none;
+        height:           17px; 
+    }
+
+.internalLinkButton:hover 
+    { 
+        box-shadow:       inset 0 1px 1px var(--white), inset 0 1.5em 1em var(--greyMercury);
+    }
+
+.internalLinkButton:active 
+    { 
+        box-shadow:       inset 0 1px 1px var(--black), inset 0 1.5em 1em var(--greyPumice); 
+    } 
+
+    
+/*************************************************************************************************************/
+/* widgets */
+
+.paleBackground 
+    {
+	    background:       var(--paleBackground); 
+    }
+        
+.greyedOut 
+    {
+	    background:       var(--greyedOut); 
+    }
+        
+/*************************************************************************************************************/
+/* tables */
+
+.primary_table
+    {
+        /* box-shadow is visible only when the primary table sits in a TD within a superior table */
+        
+        margin:           0px;
+        padding:          0px;
+        box-shadow:       5px 5px 5px var(--greySilver);
+        border:           0px solid #000000;
+	
+        -moz-border-radius-bottomleft:3px;    -webkit-border-bottom-left-radius:3px;    border-bottom-left-radius:3px;
+        -moz-border-radius-bottomright:3px;   -webkit-border-bottom-right-radius:3px;   border-bottom-right-radius:3px;
+        -moz-border-radius-topright:3px;      -webkit-border-top-right-radius:3px;      border-top-right-radius:3px;
+        -moz-border-radius-topleft:3px;       -webkit-border-top-left-radius:3px;       border-top-left-radius:3px;
+    }
+    
+.primary_table tr:first-child td
+    {
+	    /* first row has a grey full with underline - a bottom border */
+	    
+	    border:           0px solid #C5C5C5;
+	    border-width:     0px 0px 2px 0px;
+	    font-size:        var(--fontSerifSizeSmall);
+    }    
+
+.primary_table td
+    {
+	    font-size:        var(--fontSerifSizeSmall);
+    }
+    
+/* plain_secondary_table */
+/* 20200830 0755 a plain table inside a primary table retaining many of the earlier attributes whilst appearing to be a normal html table*/
+
+.plain_secondary_table
+    {
+        margin:0px;                          !important;
+        box-shadow: 0px 0px 0px 0px #fffffff !important;
+        border:0px solid #fffffff            !important;
+    }
+    
+.plain_secondary_table tr:first-child td
+    {
+	    border:0px solid #fffffff    !important;
+	    border-width:0px 0px 0px 0px !important;
+	    color:#fffffff               !important;
+    }    
+
+.plain_secondary_table td
+    {
+    	border:0px solid #fffffff    !important;
+    	padding:2px                  !important;
+    	color:#fffffff               !important;
+    } 

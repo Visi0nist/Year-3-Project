@@ -1,0 +1,110 @@
+/* cookieconsentmodal.css   */
+/* 20211229 2203            */ 
+/* KMB                   */
+
+/**********************************************/
+/* root */ 
+
+:root 
+    {
+        /* colours - devlog 20220212 0833 - darker down to lighter - http://veli.ee/colorpedia/?c=020873 */
+        
+        --black:                #000000;
+        --blackOpaque40:        rgba(0,0,0,0.4);          /* must be an rgba value in order to get the opacity percentage */
+        
+        --blueNavy:             #020873;
+        --blueCornflower:       #99C5EF;
+        --blueOnahau:           #CEE1FF;
+        
+        --greenVerdunA:         #5A7302;
+        --greenVerdunB:         #477202;
+        --greenChristi:         #55C10D;
+        --greenLimeade:         #5F9903;
+        --greenBright:          #67E911;
+        --greenChartreuse:      #8FE504;
+        --greenElectricLime:    #B4E504;
+        --greenSnowFlurry:      #DCFDC3;
+        --greenRiceFlower:      #F3FFEA;
+        
+        --greyBoulder:          #7D7D7D;
+        --greyDove:             #676767;
+        --greyConcrete:         #F2F2F2;
+        
+        --white:                #FFFFFF;
+    }
+
+/**********************************************/
+/* modal */ 
+    
+.modal 
+    {
+        background-color: var(--greyBoulder);       /* Fallback colour */
+        background-color: var(--blackOpaque40);     /* Intended colour */
+        
+        left:             0;                        /* opacity start pixel */    
+        top:              0;                        /* opacity start pixel */    
+        width:            100%;                     /* opacity end   pixel */    
+        height:           100%;                     /* opacity end   pixel */    
+        
+        position:         fixed;                    /* modal box position*/
+           
+        z-index:          1;                        /* Sit on top */
+        padding-top:      25px;                     /* displaced from top of screen                 - best with px */ 
+        padding-left:     0%;                       /* displaced from left or from centre of screen - best with %  */ 
+        
+        display:          none;                     /* Hidden by default */
+        overflow:         auto;                     /* Enable scroll if needed */
+    }
+
+.modal-box 
+    {
+        width:            30.0em;
+        border-radius:    10px;
+        font-size:        0.875em;
+        font-family:      Arial, sans-serif;
+        background-color: var(--blueOnahau);              
+        margin:           auto;
+        border:           2px solid var(--greyDove);
+    }
+    
+.modal-top    
+    {
+        display:          flex;                     /* flex means flexbox */
+        align-items:      center;                   /* vertical align - works only with flexbox */
+        background:       var(--greyConcrete);
+        padding:          1.2em;                    /* of internal text */
+        border-radius:    8px 8px 0px 0px;
+        border-bottom:    1px solid var(--black);
+    }
+    
+.modal-left 
+    {
+        /* the heading */
+        
+        width:            95%;
+        color:            var(--blueNavy);
+        font-weight:      bold;
+    }
+
+.modal-right 
+    {
+        /* the X to close the box */
+        
+        width:            5%;
+        color:            var(--blueNavy);
+        font-weight:      bold;
+        font-size:        2em;
+    }
+
+.modal-right:hover, .modal-right:focus 
+    {
+        color:            var(--blueNavy);
+        text-decoration:  none;
+        cursor:           pointer;
+    }
+    
+.modal-core    
+    {
+        padding:          1.2em;                    /* of internal text */
+    }
+  
