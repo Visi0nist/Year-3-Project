@@ -23,7 +23,7 @@ require ('foundations/commonfns.php');
 
 $cSessionID         = session_id();
 $cScript            = get_script_name($_SERVER['SCRIPT_FILENAME']);
-$cActiveApp            = get_webapp_name($_SERVER['SCRIPT_FILENAME']);  
+$cActiveApp         = get_webapp_name($_SERVER['SCRIPT_FILENAME']);  
 $cIPAddress         = get_ip_address($_SERVER['HTTP_CLIENT_IP'],$_SERVER['HTTP_X_FORWARDED_FOR'],$_SERVER['REMOTE_ADDR']);
 $cHTTPReferrer      = $_SERVER['HTTP_REFERER'];
 
@@ -59,7 +59,7 @@ $loginLockOutTimeText    = $loginLockOutTimeMins." minutes";
 
 $userCalledPage     = $_COOKIE['cookieCalledPage'];
 
-$echoID                = 43506 ;
+$echoID                = 21526 ;
 //$echoString            = $echoString."<P><B>$echoID cHTTPReferrer is $cHTTPReferrer</b>";
 //$echoString            = $echoString."<P><B>$echoID fullDirScriptPath is $fullDirScriptPath</b>";
 //$echoString            = $echoString."<P><B>$echoID userCalledPage is $userCalledPage</b>";
@@ -118,7 +118,7 @@ elseif($_POST['fOriginator'] == "login16504")
         // set lErrCode (here, early on) in case all validation items are OK, but we somehow 
         // have a mismatch between $validationScore and $validationTarget (due to bad code not bad data)
         
-        $lErrCode              = 71210 ; 
+        $lErrCode              = 51167 ; 
         $lNarrative            = "login fail";
 
         // ***************************************************************************************************
@@ -128,7 +128,7 @@ elseif($_POST['fOriginator'] == "login16504")
         $validationTarget++;   $fUserLoginText                       = trim(htmlentities($_POST['fUserLoginText']));
         $validationTarget++;   $fUserPassword                        = trim(htmlentities($_POST['fUserPassword']));
         
-	    $echoID                = 43476 ;
+	    $echoID                = 21527 ;
         
         //$echoString = $echoString."<P>$echoID fLoginCounterCurrent    $fLoginCounterCurrent";
         //$echoString = $echoString."<P>$echoID fUserLoginText          $fUserLoginText";
@@ -141,9 +141,9 @@ elseif($_POST['fOriginator'] == "login16504")
         // fUserLoginText                       standard mail test                   2 to N char
         // fUserPassword                        alpha - numeric       !*-+()%&^@     12 to 50 char
         
-        if (preg_match("/^[0-9]{1,1}$/",                               $fLoginCounterCurrent)) { $validationScore++; } else { $fLoginCounterCurrent    = ""; $lErrCode = 71211; $lNarrative ="login fail invalid fLoginCounterCurrent";}
-        if (preg_match("/^[^@\s]+@([-a-z0-9]+\.)+[a-z]{2,}$/i",        $fUserLoginText))       { $validationScore++; } else { $fUserLoginText          = ""; $lErrCode = 71212; $lNarrative ="login fail invalid fUserLoginText";}
-        if (preg_match("/^[a-zA-Z0-9\!\*\-\+\(\)\%\&\^\@]{12,50}$/",   $fUserPassword))        { $validationScore++; } else { $fUserPassword           = ""; $lErrCode = 71213; $lNarrative ="login fail invalid fUserPassword";}
+        if (preg_match("/^[0-9]{1,1}$/",                               $fLoginCounterCurrent)) { $validationScore++; } else { $fLoginCounterCurrent    = ""; $lErrCode = 52173; $lNarrative ="login fail invalid fLoginCounterCurrent";}
+        if (preg_match("/^[^@\s]+@([-a-z0-9]+\.)+[a-z]{2,}$/i",        $fUserLoginText))       { $validationScore++; } else { $fUserLoginText          = ""; $lErrCode = 52174; $lNarrative ="login fail invalid fUserLoginText";}
+        if (preg_match("/^[a-zA-Z0-9\!\*\-\+\(\)\%\&\^\@]{12,50}$/",   $fUserPassword))        { $validationScore++; } else { $fUserPassword           = ""; $lErrCode = 52175; $lNarrative ="login fail invalid fUserPassword";}
 
         // ***************************************************************************************************
         // did all the data pass all the validation?
@@ -152,7 +152,7 @@ elseif($_POST['fOriginator'] == "login16504")
             {
                 $authenticateLoginData = 1;
                 
-        	    $echoID                = 43477 ;
+        	    $echoID                = 21528 ;
         
                 //$echoString         = $echoString."<P>$echoID authenticateLoginData is $authenticateLoginData ";
             }
@@ -165,11 +165,11 @@ elseif($_POST['fOriginator'] == "login16504")
                 
                 $manageLoginAttempts   = 1;
                 
-        	    $echoID                = 43478 ;
+        	    $echoID                = 21529 ;
         
-                $echoString         = $echoString."<P>$echoID manageLoginAttempts is $manageLoginAttempts ";
-                $echoString         = $echoString."<P>$echoID lErrCode is $lErrCode ";
-                $echoString         = $echoString."<P>$echoID lNarrative is $lNarrative ";
+                //$echoString         = $echoString."<P>$echoID manageLoginAttempts is $manageLoginAttempts ";
+                //$echoString         = $echoString."<P>$echoID lErrCode is $lErrCode ";
+                //$echoString         = $echoString."<P>$echoID lNarrative is $lNarrative ";
             }        
         
 	    
@@ -178,7 +178,7 @@ else
     {
 	    // there is no else
 	    
-	    $lErrCode   = 71208; 
+	    $lErrCode   = 52168; 
 	    $lNarrative = "login fail invalid fUserLoginText fOriginator";
 	    $errMsg     = "unexpected error - refer to your sysadmin";
     }
@@ -214,7 +214,7 @@ if ($authenticateLoginData == 1)
         // stage 002
         // open connection
         
-        $echoID    = 43480 ;
+        $echoID    = 21529 ;
         $mysqli    = new mysqli("$hostName", "$dbUser","$dbPass","$dbName"); 
         if ($mysqli->connect_error) {$echoString = $echoString."<P>$echoID connect_error";}  
         
@@ -257,7 +257,7 @@ if ($authenticateLoginData == 1)
                     
                 if (mysqli_error($mysqli) != FALSE)
                      {
-                         $echoID     = 43478 ;
+                         $echoID     = 21530 ;
                          $echoString = $echoString."<P>$echoID mysql error: ".mysqli_error($mysqli);
                      } 
                     
@@ -283,7 +283,7 @@ if ($authenticateLoginData == 1)
                 // Close statement
                 $stmt->close();
                 
-        	    $echoID                = 43479 ;
+        	    $echoID                = 21531 ;
         
                 //$echoString = $echoString."<P>$echoID tSystemno               $tSystemno";
                 //$echoString = $echoString."<P>$echoID tStoredUserPassword               $tStoredUserPassword";
@@ -329,7 +329,7 @@ if ($authenticateLoginData == 1)
                     
                 if (mysqli_error($mysqli) != FALSE)
                      {
-                         $echoID     = 43482 ;
+                         $echoID     = 21532 ;
                          $echoString = $echoString."<P>$echoID mysql error: ".mysqli_error($mysqli);
                      } 
                     
@@ -351,7 +351,7 @@ if ($authenticateLoginData == 1)
                 // Close statement
                 $stmt->close();
                 
-        	    $echoID                = 43483 ;
+        	    $echoID                = 21533 ;
         
                 //$echoString = $echoString."<P>$echoID tGradeDatano               $tGradeDatano";
             }
@@ -432,7 +432,7 @@ if ($authenticateLoginData == 1)
         // $tStoredUserPassword is the value previously stored in the DB
         // $tHashedUserPassword is the hash of the login form value for $fUserPassword
         
-	    $echoID                = 43484 ;
+	    $echoID                = 21534 ;
         
         //$echoString = $echoString."<P>$echoID tStoredUserPassword    $tStoredUserPassword";
         //$echoString = $echoString."<P>$echoID tHashedUserPassword    $tHashedUserPassword";
@@ -441,14 +441,14 @@ if ($authenticateLoginData == 1)
             {
                 // fail - invalid password
                 
-        	    $echoID                = 43485 ;
+        	    $echoID                = 21535 ;
        
                 //$echoString = $echoString."<P>$echoID login fail password mismatch";
                 //$echoString = $echoString."<P>$echoID fUserLoginText is $fUserLoginText";
                 //$echoString = $echoString."<P>$echoID tHashedUserPassword is $tHashedUserPassword";
                 //$echoString = $echoString."<P>$echoID tStoredUserPassword is $tStoredUserPassword";
                 
-                $lErrCode            = 71214; 
+                $lErrCode            = 52169; 
                 $lNarrative          ="login fail password mismatch";
                 $manageLoginAttempts = 1;
                 
@@ -484,15 +484,15 @@ if ($authenticateLoginData == 1)
             {
                 // fail - not staff
                 
-        	    $echoID                = 43486 ;
+        	    $echoID                = 21536 ;
        
                 $echoString = $echoString."<P>$echoID login fail not staff";
                 
-                $lErrCode            = 71215; 
+                $lErrCode            = 52176; 
                 $lNarrative          ="login fail not staff";
                 $manageLoginAttempts = 1;
                 
-                        $echoID             = 43520 ;
+                        $echoID             = 21537 ;
                         //$echoString = $echoString."<P>$echoID tSystemno      $tSystemno";
            	            
                         // ****************************************************************
@@ -527,7 +527,7 @@ if ($authenticateLoginData == 1)
                 // but might go to another user selected page
                 // see the docs for cookieCalledPage 
                 
-        	    $echoID                = 43487 ;
+        	    $echoID                = 21538 ;
        
                 $echoString = $echoString."<P>$echoID login pass";
                 
@@ -537,7 +537,7 @@ if ($authenticateLoginData == 1)
                 $lErrCode            = 0 ; 
                 $lNarrative          ="logged in";
                 
-                        $echoID             = 43521 ;
+                        $echoID             = 21539 ;
                         //$echoString = $echoString."<P>$echoID tSystemno      $tSystemno";
            	            
                         // ****************************************************************
@@ -602,7 +602,7 @@ if ($manageLoginAttempts == 1)
                 // too many attempts 
                         
                 $lNarrative       = $lNarrative." login lock out";
-                $lErrCode         = 71216 ;
+                $lErrCode         = 52177 ;
                 $errMsg           = $errMsg."<P>The log in facility has been frozen for "
                                              .$loginLockOutTimeText.
                                              "<BR>Do not refresh this page. It will start the &quot;frozen&quot; timer again.<P><a href='"
@@ -613,13 +613,13 @@ if ($manageLoginAttempts == 1)
         elseif ($fLoginCounterCurrent == $loginAttemptsLimit)
             {
     	        $lNarrative       = $lNarrative." login final retry";
-                $lErrCode         = 71217 ;
+                $lErrCode         = 52170 ;
                 $errMsg           = $errMsg."<P>This is the final chance to log in.";
             }
         elseif ($fLoginCounterCurrent == ($loginAttemptsLimit - 1))
             {
     	        $lNarrative       = $lNarrative." login warn too many";
-                $lErrCode         = 71218 ;
+                $lErrCode         = 52171 ;
                 $errMsg           = $errMsg."<P>The log in facility may be frozen after too many log in attempts.";
             }
         else
@@ -633,7 +633,7 @@ if ($manageLoginAttempts == 1)
                 
         // decide what to show to the user
                 
-        if ($lErrCode == 71216)
+        if ($lErrCode == 52172)
             {
                 // login frozen
                     
@@ -685,7 +685,7 @@ if ($generateTokenLogin == 1)
         
         $uniqueTokenLogin = random_letter_generator(6).$unixNow;
         
-   	    $echoID                = 43488 ;
+   	    $echoID                = 21540 ;
         
         $echoString = $echoString."<P>$echoID uniqueTokenLogin    $uniqueTokenLogin";
         
@@ -707,7 +707,7 @@ if ($generateTokenLogin == 1)
         
 	    // Open connection
 	    
-        $echoID    = 43489 ;
+        $echoID    = 21541 ;
         $mysqli    = new mysqli("$hostName", "$dbUser","$dbPass","$dbName"); 
         if ($mysqli->connect_error) {$echoString = $echoString."<P>$echoID connect_error";}          
         
@@ -755,7 +755,7 @@ if ($generateTokenLogin == 1)
    
                  if (mysqli_error($mysqli) != FALSE)
                      {
-                         $echoID     = 43490 ;
+                         $echoID     = 21542 ;
                          $echoString = $echoString."<P>$echoID mysql error: ".mysqli_error($mysqli);
                      }               
                   
@@ -787,7 +787,7 @@ if ($generateTokenLogin == 1)
             
         mysqli_close($db);
      
-        $echoID      = 43491 ;
+        $echoID      = 21543 ;
         if ($mysqli->connect_error) {$echoString = $echoString."<P>$echoID connect_error";}     
         
         // *******************************************************************************
@@ -795,7 +795,7 @@ if ($generateTokenLogin == 1)
         
 	    // Open connection
 	    
-        $echoID    = 43492 ;
+        $echoID    = 21544 ;
         $mysqli    = new mysqli("$hostName", "$dbUser","$dbPass","$dbName"); 
         if ($mysqli->connect_error) {$echoString = $echoString."<P>$echoID connect_error";}          
         
@@ -845,7 +845,7 @@ if ($generateTokenLogin == 1)
    
                  if (mysqli_error($mysqli) != FALSE)
                      {
-                         $echoID     = 43492 ;
+                         $echoID     = 21545 ;
                          $echoString = $echoString."<P>$echoID mysql error: ".mysqli_error($mysqli);
                      }               
                   
@@ -898,7 +898,7 @@ if ($takeUserToDesiredPage == 1)
                 $target = $webappPath.$accessControlledDir.$userCalledPage.".php"; 
             }
         
-	    $echoID                = 43493 ;
+	    $echoID                = 21546 ;
         
         //$echoString = $echoString."<P>$echoID _COOKIE['cookieCalledPage']    $_COOKIE['cookieCalledPage']";
         //$echoString = $echoString."<P>$echoID target    $target";
