@@ -19,7 +19,7 @@ consumer facing portal is the "Long Term Tracker".
 
 This is a public version on GitHub, and contains the word REDACTED in place of sensitive data.
 
-The database has dummy data exists for many dates from 20230101 to 20230228 - ranges should be 
+The database has dummy data for many dates from 20230101 to 20230228 - ranges should be 
 10 days or more, else there may be insufficient data to build a chart.
 
 Selecting 20230101 to 20230116 illustrates how this works. Occasionally, other dates push 
