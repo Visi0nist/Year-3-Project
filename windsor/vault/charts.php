@@ -60,44 +60,128 @@ $cNameKnownAs            = $cUserData["cNameKnownAs"];
 if ($cNameKnownAs == FALSE){$cDisplayName="Logged in as ".$cNameFirstName."&nbsp;".$cNameSurname;}else{$cDisplayName="Logged in as ".$cNameKnownAs."$nbsp;".$cNameSurname;}
 
 // local var
-
-// $tableDataCellcounter is the main way that we track our progress through loops (for multiple charts)
-// it ensures that we have unique data and unique identifiers within each TD (and esp for each canvas)
           
 $tableDataCellcounter               = 0;
 
-$getDataRecentPerformance           = 0;
-$getDataRecentWeight                = 0;
+$getRecentPerformance               = 0;
+$getRecentWeight                    = 0;
+$getCustomPerformance               = 0;
+$getCustomWeight                    = 0;
 
+$showDateSelector                   = 0;
 $showGraphPerformance               = 0;
 $showGraphWeight                    = 0;
 
+$chartsTableDateSelector            = "";
 $chartsTableGraphPerformance        = "";
 $chartsTableGraphWeight             = "";
 
 // *****************************************************************************************************************************
 // 2222VALIDATE
 
+
+// chartsContinue34115
+
 if ($_POST['fOriginator'] == "someVar")
     {
         // dummy code
-        // unlike most scripts, dashboard does not call itself again (to perform ations)
-        // it only calls other scripts
-        // however, to maintain a consistent look and feel to all scripts
-        // this if-else test is inluded
-        // and variables above are set to NIL
-        // then reset as required (a little further down)
-
+        
         $echoID      = 21404 ;
         $echoString  = $echoString."<P>$echoID fOriginator is $fOriginator ";
         	    
     }
+elseif ($_POST['fOriginator'] == "chartsContinue34115"
+     || $_POST['fOriginator'] == "someVar"
+     || $_POST['fOriginator'] == "someVar")
+    {
+        // ***************************************************************************************************
+        // validation parameters
+        
+        $validationScore       = 0;
+        $validationTarget      = 0;
+        
+        // ***************************************************************************************************
+        // get the data from the form, increment the validationTarget each time
+
+        $validationTarget++;   $fOriginator                 = trim(htmlentities($_POST['fOriginator']));        	    
+        $validationTarget++;   $fSystemno                   = trim(htmlentities($_POST['fSystemno']));     
+        $validationTarget++;   $fDateStart                  = trim(htmlentities($_POST['fDateStart']));     
+        $validationTarget++;   $fDateEnd                    = trim(htmlentities($_POST['fDateEnd']));     
+
+        // dates - remove non numeric char from string, / -, etc
+        
+        $fDateTime = preg_replace('/[^0-9]/', '', $fDateTime);
+        
+        $echoID      = 21547 ;
+        
+        //$echoString  = $echoString."<P>$echoID fOriginator is $fOriginator ";
+        
+        // ***************************************************************************************************
+        // validate the data
+        
+        // wiki - php validation standard tests 
+        
+        // fOriginator                              alpha, numeric                       4 to 50 char 
+        // fSystemno                                numeric                              4-11 char
+        // fDateStart                               numeric                              8-12 char
+        // fDateEnd                                 numeric                              8-12 char
+        
+        // set a fallBackErrCode in case all validation items are OK, but a mismatch between $validationScore and $validationTarget occurs
+        
+        $fallBackErrCode                                                                                                                                                                                                      = 52178; 
+        if (preg_match("/^[a-zA-Z0-9]{4,50}$/",                      $fOriginator))          { $validationScore++; }                                                             else { $fOriginator          = ""; $lErrCode = 52179;}
+        if (preg_match("/^[0-9]{4,11}$/",                            $fSystemno))            { $validationScore++; }                                                             else { $fSystemno            = ""; $lErrCode = 52180;}
+        if (preg_match("/^[0-9]{8,12}$/",                            $fDateStart))           { $validationScore++; }                                                             else { $fDateStart           = ""; $lErrCode = 52181;}
+        if (preg_match("/^[0-9]{8,12}$/",                            $fDateEnd))             { $validationScore++; }                                                             else { $fDateEnd             = ""; $lErrCode = 52182;}
+        
+        // ***************************************************************************************************
+        // now that validation has been performed
+        
+        // ignore mins seconds
+        
+        $fDateStart = substr($fDateStart, 0, 8);
+        $fDateEnd   = substr($fDateEnd, 0, 8);
+        
+        // ***************************************************************************************************
+        // evaluate validation
+        
+        if($validationTarget != 0 && $validationScore == $validationTarget)
+            {
+                // good
+                
+                $lNarrative             = "custom dates set";
+                        
+                $showDateSelector       = 1;
+                $getCustomPerformance   = 1;
+                $getCustomWeight        = 1;
+                
+            }
+        else
+            {
+                // bad
+                
+                if ($lErrCode == FALSE) {$lErrCode = $fallBackErrCode;} 
+                
+                $errMsg         = "The data was not understood - Error code ".$lErrCode;
+                $lNarrative     = "validation failed";
+            }        
+        	    
+    }
 else 
     {
-        // first call to this script either by login process or by navbar button        
+        // first call to this script
         $lErrCode            = 0 ; 
         $lNarrative          ="call to $cScript";
                 
+        $echoID      = 21425 ;
+        //$echoString  = $echoString."<P>$echoID cActiveApp is $cActiveApp ";
+        
+        $showDateSelector       = 1;
+        $getRecentPerformance   = 1;
+        $getRecentWeight        = 1;
+                        
+    }
+ 
                         $echoID             = 21405 ;
                         //$echoString = $echoString."<P>$echoID tSystemno      $tSystemno";
            	            
@@ -125,14 +209,6 @@ else
                         // ****************************************************************
                         // ****************************************************************
                         
-        $echoID      = 21425 ;
-        //$echoString  = $echoString."<P>$echoID cActiveApp is $cActiveApp ";
-        
-        $getDataRecentPerformance   = 1;
-        $getDataRecentWeight        = 1;
-                        
-    }
- 
 // *****************************************************************************************************************************
 // 3333DATABASE WORK
 
@@ -141,10 +217,10 @@ else
 // YYYYMMDDhhmm
 
 // **********************************************************************************
-// getDataRecentWeight
+// getRecentWeight
 // 20230325 2132
 
-if ($getDataRecentWeight == 1)
+if ($getRecentWeight == 1 || $getCustomWeight == 1)
     {
         // *******************************************************************************
         // stage 000
@@ -159,7 +235,7 @@ if ($getDataRecentWeight == 1)
         
         // set variables
         
-        $recentWeightQuota         = 10;
+        $quotaWeight               = 10;
         
         $cWeightDate               = array();
         $cKilograms                = array();
@@ -180,23 +256,45 @@ if ($getDataRecentWeight == 1)
         
         // Declare query
         
-        // get $recentWeightQuota records for that $mostCommonKilograms
         // to get the most recent we need to order by DESC
         // but then, for the chart, we need to reorder the 10 most recent by ASC
-        // first, get them (by DESC)        
+        // first, get them (by DESC)  
         
-        $query = " 
-                    SELECT 
-                           mWeightDate,
-                           mKilograms
-                      FROM 
-                           weight 
-                     WHERE 
-                           mSystemno = ?
-                  ORDER BY 
-                           mWeightDate 
-                      DESC            
-                 ";
+        if ($getRecentWeight == 1)
+            {
+                $query = " 
+                            SELECT 
+                                   mWeightDate,
+                                   mKilograms
+                              FROM 
+                                   weight 
+                             WHERE 
+                                   mSystemno = ?
+                          ORDER BY 
+                                   mWeightDate 
+                              DESC            
+                         ";
+            }
+        else
+            {
+                // getCustomWeight
+                
+                $query = " 
+                            SELECT 
+                                   mWeightDate,
+                                   mKilograms
+                              FROM 
+                                   weight 
+                             WHERE 
+                                   mSystemno = ?
+                               AND
+                                   mWeightDate BETWEEN $fDateStart AND $fDateEnd
+                          ORDER BY 
+                                   mWeightDate 
+                              DESC            
+                         ";
+            }
+
       
         // *******************************************************************************
         // stage 004
@@ -255,7 +353,18 @@ if ($getDataRecentWeight == 1)
         
         // limit the number of elements (using temp array, then assign that to current array)
         
-        for ($loopCounter001=0; $loopCounter001<$recentWeightQuota; $loopCounter001++)
+       if ($getRecentWeight == 1)
+           {
+               $loopLimit = $quotaWeight;
+           }
+       else
+           {
+                // getCustomWeight
+                
+               $loopLimit = count ($cWeightDate);
+           }
+        
+        for ($loopCounter001=0; $loopCounter001<$loopLimit; $loopCounter001++)
             {
                 $tWeightDate[] = $cWeightDate[$loopCounter001];
                 $tKilograms[]  = $cKilograms[$loopCounter001];
@@ -280,10 +389,10 @@ if ($getDataRecentWeight == 1)
         // *******************************************************************************
         // stage 007
         
-        if (count($cWeightDate) < $recentWeightQuota)
+        if (count($cWeightDate) < $quotaWeight)
             {
                 $echoID     = 21489 ;
-                $echoString = $echoString."<P>$echoID Too few weight recordslogged. No chart!";
+                $echoString = $echoString."<P>$echoID Too few weight records logged. No chart!";
             }
         else
             {
@@ -298,10 +407,10 @@ if ($getDataRecentWeight == 1)
     }
 
 // **********************************************************************************
-// getDataRecentPerformance
+// getRecentPerformance
 // 20230324 1956
 
-if ($getDataRecentPerformance == 1)
+if ($getRecentPerformance == 1 || $getCustomPerformance == 1)
     {
         // *******************************************************************************
         // stage 000
@@ -316,7 +425,7 @@ if ($getDataRecentPerformance == 1)
         
         // set variables
         
-        $recentPerformanceQuota     = 10;
+        $quotaPerformance           = 10;
         $hiFrequencyPursuitDistance = array();
         $mostCommonPursuitDistance  = 0;
         
@@ -365,7 +474,7 @@ if ($getDataRecentPerformance == 1)
      
                 //$arrayString = print_r($row, TRUE); $echoString = $echoString."<P>$echoID row is $arrayString ";         
         
-                if ($row['frequency'] > $recentPerformanceQuota)
+                if ($row['frequency'] > $quotaPerformance)
                     {
                         $hiFrequencyPursuitDistance[]    = htmlspecialchars($mPursuitDistance);                 
                     }
@@ -390,7 +499,7 @@ if ($getDataRecentPerformance == 1)
         if (count($hiFrequencyPursuitDistance) == FALSE)
             {
                 $echoID     = 21471 ;
-                $echoString = $echoString."<P>$echoID No distances logged. No chart!";
+                $echoString = $echoString."<P>$echoID insufficient distances logged. At least $quotaPerformance are needed to build the chart.";
             }
         else
             {
@@ -407,27 +516,51 @@ if ($getDataRecentPerformance == 1)
         
         // Declare query
         
-        // get $recentPerformanceQuota records for that $mostCommonPursuitDistance
+        // get $quotaPerformance records for that $mostCommonPursuitDistance
         // to get the most recent we need to order by DESC
         // but then, for the chart, we need to reorder the 10 most recent by ASC
         // first, get them (by DESC)        
         
-        $query = " 
-                    SELECT 
-                           mPursuitDate,
-                           mPursuitDuration
-                      FROM 
-                           performance 
-                     WHERE 
-                           mSystemno = ?
-                       AND
-                           mPursuitDistance = ?
-                  ORDER BY 
-                           mPursuitDate 
-                       DESC            
-                     LIMIT 
-                           0,$recentPerformanceQuota
-                 ";
+        if ($getRecentPerformance == 1)
+            {
+                $query = " 
+                            SELECT 
+                                   mPursuitDate,
+                                   mPursuitDuration
+                              FROM 
+                                   performance 
+                             WHERE 
+                                   mSystemno = ?
+                               AND
+                                   mPursuitDistance = ?
+                          ORDER BY 
+                                   mPursuitDate 
+                              DESC            
+                             LIMIT 
+                                   0,$quotaPerformance
+                         ";
+            }
+        else
+            {
+                // $getCustomPerformance
+                
+                $query = " 
+                            SELECT 
+                                   mPursuitDate,
+                                   mPursuitDuration
+                              FROM 
+                                   performance 
+                             WHERE 
+                                   mSystemno = ?
+                               AND
+                                   mPursuitDistance = ?
+                               AND
+                                   mPursuitDate BETWEEN $fDateStart AND $fDateEnd
+                          ORDER BY 
+                                   mPursuitDate 
+                               DESC            
+                         ";
+            }
       
         // *******************************************************************************
         // stage 007
@@ -509,6 +642,101 @@ if ($getDataRecentPerformance == 1)
 // **********************************************************************************
 // someRoutine
 // YYYYMMDDhhmm
+
+// **********************************************************************************
+// showDateSelector
+// 20230325 2142
+
+if ($showDateSelector == 1)
+    {
+        // *******************************************************************************
+        // stage 000
+        
+        // preamble
+        
+        // *******************************************************************************
+        // stage 001
+        
+        $chartsTableDateSelector = $chartsTableDateSelector."
+    
+         <form  style='display:inline;' action='charts.php'             method='POST'>
+          <div class='primary_table'> 
+          <table border=0 cellpadding=$cellPadding cellspacing=$cellSpacing width=100%>
+          
+           <tr>
+            <td style='text-align: right; vertical-align: top; min-width:1px; padding:8px' colspan=4>
+            
+            <input type='hidden'           name='fOriginator'              value='chartsContinue34115'>
+            <input type='hidden'           name='fSystemno'                value='$cSystemno'>
+            <input type='submit'                                           value=' Continue 34115 > '     class='standardWidthFormButton' >
+            
+            </td>
+           <tr>
+            <td style='text-align: center; vertical-align: top; min-width:1px; padding:8px' colspan=4>
+            
+            <b>
+            Dummy data exists for many dates from 20230101 to 20230228 - ranges should be 10 days or more, else 
+            there may be insufficient data to build a chart.
+            <P>
+            Selecting 20230209 to 20230220 illustrates how this works. Occasionally, other dates push the data off the scale.
+            </B>
+            
+            </td>
+           </tr>
+           
+           <tr>
+             <td style='text-align: left; vertical-align: top; min-width:1px; padding:$dataCellPadding' colspan=1>
+             &nbsp;
+             </td>
+             <td style='background:#E8FFC6; text-align:left; vertical-align:top; min-width:1px; padding:$dataCellPadding' colspan=1>
+             <b>
+             Custom Dates - From
+             </b>
+             </td>
+             <td style='background:#E8FFC6; text-align:left; vertical-align:top; min-width:1px; padding:$dataCellPadding' colspan=1>
+             <b>
+             To
+             </b>
+             </td>
+             <td style='text-align: left; vertical-align: top; min-width:1px; padding:$dataCellPadding' colspan=1>
+             &nbsp;
+             </td>
+           </tr>        
+           
+           <tr>
+             <td style='text-align: left; vertical-align: top; min-width:1px; padding:$dataCellPadding' colspan=1>
+             &nbsp;
+             </td>
+             <td style='background:#E8FFC6; text-align:left; vertical-align:top; min-width:1px; padding:4px' colspan=1>
+             <input  type='text'            name='fDateStart'                    value='$fDateStart'  size=20> 
+             <BR>
+             <i>
+             YYYYMMDD
+             </i>
+             </td>
+             <td style='background:#E8FFC6; text-align:left; vertical-align:top; min-width:1px; padding:4px' colspan=1>
+             <input  type='text'            name='fDateEnd'                    value='$fDateEnd'  size=20> 
+             <BR>
+             <i>
+             YYYYMMDD
+             </i>
+             </td>
+             <td style='text-align: left; vertical-align: top; min-width:1px; padding:$dataCellPadding' colspan=1>
+             &nbsp;
+             </td>
+           </tr>        
+           <tr>
+            <td style='text-align:left; vertical-align: top; min-width:1px; padding:$dataCellPadding' colspan=4>
+            &nbsp;
+            </td>
+           </tr>
+          </table>
+         
+          </div> 
+         </form>             
+        
+        ";        
+    }
 
 // **********************************************************************************
 // showGraphWeight
@@ -1166,6 +1394,11 @@ require ('../header.php');
 
 echo "
           <table border=0 cellpadding=4 cellspacing=4 width=100%>
+           <tr>
+            <td style='text-align: center; vertical-align: top; min-width:1px' colspan=2>
+            $chartsTableDateSelector
+            </td>
+           </tr>
            <tr>
             <td style='text-align: center; vertical-align: top; min-width:1px'>
             $chartsTableGraphPerformance
