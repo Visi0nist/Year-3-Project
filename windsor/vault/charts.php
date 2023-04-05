@@ -61,7 +61,8 @@ if ($cNameKnownAs == FALSE){$cDisplayName="Logged in as ".$cNameFirstName."&nbsp
 
 // local var
           
-$tableDataCellcounter               = 0;
+$coefficientPerformance              = 0;
+$coefficientWeight                   = 0;
 
 $getRecentPerformance               = 0;
 $getRecentWeight                    = 0;
@@ -678,7 +679,7 @@ if ($showDateSelector == 1)
             Dummy data exists for many dates from 20230101 to 20230228 - ranges should be 10 days or more, else 
             there may be insufficient data to build a chart.
             <P>
-            Selecting 20230209 to 20230220 illustrates how this works. Occasionally, other dates push the data off the scale.
+            Selecting 20230101 to 20230116 illustrates how this works. Occasionally, other dates push the data off the scale.
             </B>
             
             </td>
@@ -775,7 +776,7 @@ if ($showGraphWeight == 1)
         $plottableValues            = array();
         $plottableInvertedValues    = array();
         
-        $chartTitle = "Weight Trend";  // 20230325 2116 xxx resume add something here about pursuit text and distance
+        $chartTitle = "Weight Trend";  
         
         // *******************************************************************************
         // stage 002
@@ -886,7 +887,25 @@ if ($showGraphWeight == 1)
         //$arrayString = print_r($firstAndLastXAndY, TRUE); $echoString = $echoString."<P>$echoID firstAndLastXAndY is $arrayString ";         
         
         // *******************************************************************************
-        // stage 005
+        // stage 006
+        
+        // Attainment Coefficient
+        
+        // interpret from regression_analysis and adjust from canvas values to human readable (rebased) values
+        
+        $rebasedStart = ($graphCanvasHeight/2) - $firstY;
+        $rebasedEnd   = ($graphCanvasHeight/2) - $lastY;
+        
+        $coefficientPerformance = $rebasedEnd - $rebasedStart;
+        
+        if ($coefficientPerformance > 0)
+            {
+                // add text to show it is +ve
+                $coefficientPerformance = "+".$coefficientPerformance;
+            }
+            
+        // *******************************************************************************
+        // stage 007
         
         // show a canvas containing the graph
       
@@ -903,6 +922,8 @@ if ($showGraphWeight == 1)
           <b>
           $chartTitle
           </b>
+          <P>
+          Attainment Coefficient $coefficientPerformance
           </center>
           </td>
          </tr>
@@ -1095,8 +1116,8 @@ if ($showGraphPerformance == 1)
         $plottableValues            = array();
         $plottableInvertedValues    = array();
         
-        $chartTitle = "Recent Performance";  // 20230325 2116 xxx resume add something here about pursuit text and distance
-        
+        $chartTitle = "Recent Performance";  
+               
         // *******************************************************************************
         // stage 002
         
@@ -1213,10 +1234,36 @@ if ($showGraphPerformance == 1)
         
         $echoID       = 21478 ;
 
-        //$arrayString = print_r($firstAndLastXAndY, TRUE); $echoString = $echoString."<P>$echoID firstAndLastXAndY is $arrayString ";         
+        //$arrayString = print_r($firstAndLastXAndY, TRUE); $echoString = $echoString."<P>$echoID firstAndLastXAndY is $arrayString ";   
         
         // *******************************************************************************
-        // stage 005
+        // stage 006
+        
+        // Attainment Coefficient
+        
+        // interpret from regression_analysis and adjust from canvas values to human readable (rebased) values
+        
+        $rebasedStart = ($graphCanvasHeight/2) - $firstY;
+        $rebasedEnd   = ($graphCanvasHeight/2) - $lastY;
+        
+        $coefficientPerformance = $rebasedEnd - $rebasedStart;
+        
+        if ($coefficientPerformance > 0)
+            {
+                // add text to show it is +ve
+                $coefficientPerformance = "+".$coefficientPerformance;
+            }
+        
+        
+      
+        $echoID       = 21548 ;
+
+        //$arrayString = print_r($firstAndLastXAndY, TRUE); $echoString = $echoString."<P>$echoID firstAndLastXAndY is $arrayString ";   
+        //$echoString = $echoString."<P>$echoID rebasedStart is $rebasedStart ";
+        //$echoString = $echoString."<P>$echoID rebasedEnd is $rebasedEnd ";
+        
+        // *******************************************************************************
+        // stage 007
         
         // show a canvas containing the graph
       
@@ -1233,6 +1280,8 @@ if ($showGraphPerformance == 1)
           <b>
           $chartTitle
           </b>
+          <P>
+          Attainment Coefficient $coefficientPerformance
           </center>
           </td>
          </tr>
